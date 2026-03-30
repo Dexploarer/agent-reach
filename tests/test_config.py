@@ -57,19 +57,24 @@ class TestConfig:
         assert tmp_config.get("to_delete") is None
 
     def test_is_configured(self, tmp_config):
-        assert not tmp_config.is_configured("exa_search")
-        tmp_config.set("exa_api_key", "test-key")
-        assert tmp_config.is_configured("exa_search")
+        assert not tmp_config.is_configured("groq_whisper")
+        tmp_config.set("groq_api_key", "test-key")
+        assert tmp_config.is_configured("groq_whisper")
 
     def test_is_configured_reddit(self, tmp_config):
         assert not tmp_config.is_configured("reddit_proxy")
         tmp_config.set("reddit_proxy", "http://user:pass@ip:port")
         assert tmp_config.is_configured("reddit_proxy")
 
-    def test_get_configured_features(self, tmp_config):
+    def test_get_configured_features(self, tmp_config, monkeypatch):
+        monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+        monkeypatch.delenv("GROQ_API_KEY", raising=False)
+        monkeypatch.delenv("TWITTER_AUTH_TOKEN", raising=False)
+        monkeypatch.delenv("TWITTER_CT0", raising=False)
+        monkeypatch.delenv("REDDIT_PROXY", raising=False)
         features = tmp_config.get_configured_features()
         assert isinstance(features, dict)
-        assert "exa_search" in features
+        assert "github_token" in features
         assert all(v is False for v in features.values())
 
     def test_to_dict_masks_sensitive(self, tmp_config):
