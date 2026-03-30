@@ -22,7 +22,8 @@ export class GitHubChannel extends Channel {
 
   canHandle(url: string): boolean {
     try {
-      return new URL(url).hostname.toLowerCase().includes("github.com");
+      const hostname = new URL(url).hostname.toLowerCase();
+      return hostname === "github.com" || hostname.endsWith(".github.com");
     } catch {
       return false;
     }

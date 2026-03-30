@@ -22,7 +22,8 @@ export class LinkedInChannel extends Channel {
 
   canHandle(url: string): boolean {
     try {
-      return new URL(url).hostname.toLowerCase().includes("linkedin.com");
+      const hostname = new URL(url).hostname.toLowerCase();
+      return hostname === "linkedin.com" || hostname.endsWith(".linkedin.com");
     } catch {
       return false;
     }

@@ -36,7 +36,7 @@ export class RedditChannel extends Channel {
   canHandle(url: string): boolean {
     try {
       const hostname = new URL(url).hostname.toLowerCase();
-      return hostname.includes("reddit.com") || hostname.includes("redd.it");
+      return hostname === "reddit.com" || hostname.endsWith(".reddit.com") || hostname === "redd.it";
     } catch {
       return false;
     }

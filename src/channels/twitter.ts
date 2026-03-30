@@ -24,9 +24,11 @@ export class TwitterChannel extends Channel {
     try {
       const hostname = new URL(url).hostname.toLowerCase();
       return (
-        hostname.includes("twitter.com") ||
-        hostname.includes("x.com") ||
-        hostname.includes("t.co")
+        hostname === "twitter.com" ||
+        hostname.endsWith(".twitter.com") ||
+        hostname === "x.com" ||
+        hostname.endsWith(".x.com") ||
+        hostname === "t.co"
       );
     } catch {
       return false;

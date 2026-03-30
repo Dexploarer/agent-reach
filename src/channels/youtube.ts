@@ -26,7 +26,11 @@ export class YouTubeChannel extends Channel {
   canHandle(url: string): boolean {
     try {
       const hostname = new URL(url).hostname.toLowerCase();
-      return hostname.includes("youtube.com") || hostname.includes("youtu.be");
+      return (
+        hostname === "youtube.com" ||
+        hostname.endsWith(".youtube.com") ||
+        hostname === "youtu.be"
+      );
     } catch {
       return false;
     }
