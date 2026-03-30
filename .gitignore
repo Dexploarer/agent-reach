@@ -8,3 +8,6 @@ build/
 .env
 .agent-reach/
 *.log
+
+# Node.js / TypeScript
+node_modules/
