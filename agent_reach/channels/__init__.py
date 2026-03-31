@@ -13,7 +13,6 @@ from .twitter import TwitterChannel
 from .youtube import YouTubeChannel
 from .reddit import RedditChannel
 from .rss import RSSChannel
-from .exa_search import ExaSearchChannel
 from .linkedin import LinkedInChannel
 
 
@@ -24,7 +23,6 @@ ALL_CHANNELS: List[Channel] = [
     RedditChannel(),
     LinkedInChannel(),
     RSSChannel(),
-    ExaSearchChannel(),
     WebChannel(),
 ]
 

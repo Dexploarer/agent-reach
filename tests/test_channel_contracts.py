@@ -76,7 +76,6 @@ def test_channel_can_handle_contract():
         "reddit": "https://reddit.com/r/python",
         "linkedin": "https://www.linkedin.com/in/test",
         "rss": "https://example.com/feed.xml",
-        "exa_search": "https://example.com",
         "web": "https://example.com",
     }
     for ch in get_all_channels():

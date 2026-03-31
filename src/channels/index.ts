@@ -20,7 +20,6 @@ import { LinkedInChannel } from "./linkedin";
 import { RedditChannel } from "./reddit";
 import { RSSChannel } from "./rss";
 import { TwitterChannel } from "./twitter";
-import { ExaSearchChannel } from "./exaSearch";
 
 export const ALL_CHANNELS: Channel[] = [
   new GitHubChannel(),
@@ -29,7 +28,6 @@ export const ALL_CHANNELS: Channel[] = [
   new RedditChannel(),
   new LinkedInChannel(),
   new RSSChannel(),
-  new ExaSearchChannel(),
   new WebChannel(),
 ];
 

@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 """Tests for channel registry basics and health checks."""
 
-import shutil
-from urllib.error import URLError
-
 from agent_reach.channels import get_all_channels, get_channel
 
 

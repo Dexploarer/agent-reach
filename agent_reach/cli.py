@@ -98,10 +98,6 @@ def main():
     p_skill_group.add_argument("--uninstall", action="store_true",
                                help="Remove SKILL.md from agent skill directories")
 
-    # ── format ──
-    p_format = sub.add_parser("format", help="Clean and format platform API output")
-    p_format.add_argument("platform", choices=[], help="Platform to format")
-
     # ── check-update ──
     sub.add_parser("check-update", help="Check for new versions and changes")
 
@@ -140,8 +136,6 @@ def main():
         _cmd_uninstall(args)
     elif args.command == "skill":
         _cmd_skill(args)
-    elif args.command == "format":
-        _cmd_format(args)
 
 
 # ── Command handlers ────────────────────────────────
@@ -242,7 +236,7 @@ def _cmd_install(args):
     # Environment-specific advice
     if env == "server":
         print()
-        print("Tip: Reddit and Bilibili block server IPs.")
+        print("Tip: Reddit blocks server IPs.")
         print("   Reddit search still works via Exa (free).")
         print("   For full access: agent-reach configure proxy http://user:pass@ip:port")
         print("   Cheap option: https://www.webshare.io ($1/month)")
@@ -368,12 +362,6 @@ def _cmd_skill(args):
         _install_skill()
     elif args.uninstall:
         _uninstall_skill()
-
-
-def _cmd_format(args):
-    """Clean and format platform API output from stdin."""
-    print(f"Error: no formatters available for platform '{args.platform}'", file=sys.stderr)
-    sys.exit(1)
 
 
 def _install_system_deps():
@@ -547,29 +535,6 @@ def _install_system_deps_safe():
     else:
         print("  All system dependencies are installed!")
 
-    # WeChat check (Python packages, not binaries)
-    has_camoufox = has_miku = False
-    try:
-        import camoufox  # noqa: F401
-        has_camoufox = True
-    except ImportError:
-        pass
-    try:
-        import miku_ai  # noqa: F401
-        has_miku = True
-    except ImportError:
-        pass
-    if has_camoufox and has_miku:
-        print("  ✅ WeChat article tools already installed")
-    else:
-        pkgs = []
-        if not has_camoufox:
-            pkgs.extend(["camoufox[geoip]", "markdownify", "beautifulsoup4", "httpx"])
-        if not has_miku:
-            pkgs.append("miku_ai")
-        print(f"  -- WeChat article tools not found")
-        print(f"    Install: pip install {' '.join(pkgs)}")
-
 
 def _install_system_deps_dryrun():
     """Dry-run: just show what would be checked/installed."""
@@ -590,30 +555,13 @@ def _install_system_deps_dryrun():
         else:
             print(f"  {label}: would install via: {method}")
 
-    # WeChat
-    has_camoufox = has_miku = False
-    try:
-        import camoufox  # noqa: F401
-        has_camoufox = True
-    except ImportError:
-        pass
-    try:
-        import miku_ai  # noqa: F401
-        has_miku = True
-    except ImportError:
-        pass
-    if has_camoufox and has_miku:
-        print("  ✅ WeChat article tools: already installed, skip")
-    else:
-        print("  WeChat article tools: would install via: pip install camoufox[geoip] markdownify beautifulsoup4 httpx miku_ai")
-
 
 def _install_mcporter():
-    """Install mcporter and configure Exa + XiaoHongShu MCP servers."""
+    """Install mcporter and configure Exa MCP server."""
     import shutil
     import subprocess
 
-    print("Setting up mcporter (search + XiaoHongShu backend)...")
+    print("Setting up mcporter (Exa search backend)...")
 
     if shutil.which("mcporter"):
         print("  ✅ mcporter already installed")
@@ -652,6 +600,7 @@ def _install_mcporter():
             print("  ✅ Exa search already configured")
     except Exception:
         print("  [!]  Could not configure Exa. Run manually: mcporter config add exa https://mcp.exa.ai/mcp")
+
 
 def _install_mcporter_safe():
     """Safe mode: check mcporter status, print instructions."""
